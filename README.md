@@ -54,3 +54,25 @@ As it can be annoying to work with long commands, you may wish to add an alias l
 ```bash
 alias kcat='docker run --rm --network=host edenhill/kcat:1.7.1'
 ```
+
+## jq functions
+
+There are `jq` functions defined in `kafka.jq`.
+These can be imported into a `jq` script using `include "./kafka";` at the start, assuming you are running from the root of this repository.
+
+### Timestamp conversion
+
+One of the `jq` functions is `ts_to_date`, which converts Kafka timestamps, given as milliseconds since the Unix epoch, into human-readable dates.
+Millisecond precision is retained.
+
+Example:
+```bash
+docker run --rm --network=host edenhill/kcat:1.7.1 -b localhost:9092 -t test -CeqJ \
+  | jq 'include "./kafka"; [.ts, ts_to_date]'
+```
+```json
+[
+  1737461938187,
+  "2025-01-21T12:18:58.187Z"
+]
+```
