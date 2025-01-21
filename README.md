@@ -2,7 +2,9 @@
 
 A collection of miscellaneous tools for making it easier to work with (Apache) Kafka.
 
-## Running Kafka locally
+## Quickstart
+
+### Running Kafka locally
 
 There are [official instructions](https://kafka.apache.org/quickstart) for running Apache Kafka in different modes (KRaft in Docker, ZooKeeper in Docker, etc.).
 The KRaft in Docker setup can be run with:
@@ -12,7 +14,7 @@ docker pull apache/kafka:${KAFKA_VERSION}
 docker run -p 9092 apache/kafka:${KAFKA_VERSION}
 ```
 
-## kcat (formerly kafkacat)
+### kcat (formerly kafkacat)
 
 `kcat` is available as a Docker image, if you do not have it already installed locally.
 The 1.7.1 [edenhill/kcat image](https://hub.docker.com/r/edenhill/kcat/tags) is under 17MB (compressed).
@@ -47,8 +49,6 @@ You should see something like:
 ```json
 {"topic":"test","partition":0,"offset":1,"tstype":"create","ts":1737461938187,"broker":1,"key":null,"payload":"data"}
 ```
-
-### Alias
 
 As it can be annoying to work with long commands, you may wish to add an alias like the below to your `~/.bashrc` or equivalent:
 ```bash
