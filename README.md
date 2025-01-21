@@ -47,3 +47,10 @@ You should see something like:
 ```json
 {"topic":"test","partition":0,"offset":1,"tstype":"create","ts":1737461938187,"broker":1,"key":null,"payload":"data"}
 ```
+
+### Alias
+
+As it can be annoying to work with long commands, you may wish to add an alias like the below to your `~/.bashrc` or equivalent:
+```bash
+alias kcat='docker run --rm --network=host edenhill/kcat:1.7.1'
+```
