@@ -112,6 +112,7 @@ Kafka headers are given as a flat list, whereas we typically think of them as ke
 Note that the above message has a _repeated_ header key, `foo`, which is valid usage.
 
 This repository defines another `jq` function, called `headers`, which performs this transformation from list to map, accounting for repeated keys.
+As a further benefit, it does not reorder repeated keys, so any significance of a specific ordering of values will be retained.
 Example:
 ```bash
 kcat -b localhost:9092 -t test -CeqJ \
