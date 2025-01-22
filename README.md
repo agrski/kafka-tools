@@ -76,3 +76,55 @@ docker run --rm --network=host edenhill/kcat:1.7.1 -b localhost:9092 -t test -Ce
   "2025-01-21T12:18:58.187Z"
 ]
 ```
+
+### Headers
+
+_For this section, you may wish to restart the Kafka instance(s) set up previously as a quick means of deleting the test topic (and its contents)._
+
+First, ensure a message is created with headers:
+```
+echo 'data' | kcat -b localhost:9092 -t test -P -H foo=bar -H foo=baz -H quux=5
+kcat -b localhost:9092 -t test -CeqJ
+```
+The output should look similar to:
+```json
+{
+  "topic": "test",
+  "partition": 0,
+  "offset": 0,
+  "tstype": "create",
+  "ts": 1737468354865,
+  "broker": 1,
+  "headers": [
+    "foo",
+    "bar",
+    "foo",
+    "baz",
+    "quux",
+    "5"
+  ],
+  "key": null,
+  "payload": "data"
+}
+```
+
+Kafka headers are given as a flat list, whereas we typically think of them as key/value pairs.
+Note that the above message has a _repeated_ header key, `foo`, which is valid usage.
+
+This repository defines another `jq` function, called `headers`, which performs this transformation from list to map, accounting for repeated keys.
+Example:
+```bash
+kcat -b localhost:9092 -t test -CeqJ \
+  | jq 'include "./kafka"; headers'
+```
+```json
+{
+  "foo": [
+    "bar",
+    "baz"
+  ],
+  "quux": [
+    "5"
+  ]
+}
+```
