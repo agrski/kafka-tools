@@ -4,7 +4,12 @@ module {
 };
 
 def ts_to_date:
-  .ts | (. % 1000) as $ms | . / 1000 | todate | sub("Z"; ($ms | tostring | "." + . + "Z"));
+  .ts
+    | (. % 1000) as $ms
+    | . / 1000
+    | todate
+    | sub("Z"; ($ms | tostring | "." + . + "Z"))
+  ;
 
 def headers:
   .headers
